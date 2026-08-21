@@ -1,0 +1,115 @@
+{
+  "transport": {
+    "airplane": {
+      "name": "Airplane",
+      "pricePerHour": 1300,
+      "speed": 800
+    },
+    "bus": {
+      "name": "Bus",
+      "pricePerHour": 700,
+      "speed": 70
+    },
+    "car": {
+      "name": "Car",
+      "pricePerHour": 200,
+      "speed": 90
+    }
+  },
+
+  "beaches": {
+
+    "north": [
+      {
+        "name": "Reynisfjara Beach",
+        "country": "Iceland",
+        "city": "Vik",
+        "ocean": "Atlantic Ocean",
+        "mainAttraction": "Black sand and basalt columns",
+        "specialFeature": "Dramatic volcanic coastline",
+        "latitude": 63.4043,
+        "longitude": -19.0448
+      },
+      {
+        "name": "Uttakleiv Beach",
+        "country": "Norway",
+        "city": "Lofoten",
+        "ocean": "Norwegian Sea",
+        "mainAttraction": "Mountain scenery and Arctic beach",
+        "specialFeature": "Midnight sun and northern landscapes",
+        "latitude": 68.2074,
+        "longitude": 13.5261
+      }
+    ],
+
+    "south": [
+      {
+        "name": "Bondi Beach",
+        "country": "Australia",
+        "city": "Sydney",
+        "ocean": "Pacific Ocean",
+        "mainAttraction": "Surf culture & golden sand",
+        "specialFeature": "Australian beach culture",
+        "latitude": -33.8908,
+        "longitude": 151.2743
+      },
+      {
+        "name": "Camps Bay Beach",
+        "country": "South Africa",
+        "city": "Cape Town",
+        "ocean": "Atlantic Ocean",
+        "mainAttraction": "Beach and mountain scenery",
+        "specialFeature": "Twelve Apostles backdrop",
+        "latitude": -33.9500,
+        "longitude": 18.3770
+      }
+    ],
+
+    "east": [
+      {
+        "name": "Maya Bay",
+        "country": "Thailand",
+        "city": "Ko Phi Phi",
+        "ocean": "Andaman Sea",
+        "mainAttraction": "Turquoise water and limestone cliffs",
+        "specialFeature": "Iconic tropical bay",
+        "latitude": 7.6790,
+        "longitude": 98.7660
+      },
+      {
+        "name": "Haeundae Beach",
+        "country": "South Korea",
+        "city": "Busan",
+        "ocean": "Korea Strait",
+        "mainAttraction": "Urban beach and waterfront",
+        "specialFeature": "One of Korea's most famous beaches",
+        "latitude": 35.1587,
+        "longitude": 129.1603
+      }
+    ],
+
+    "west": [
+      {
+        "name": "Copacabana Beach",
+        "country": "Brazil",
+        "city": "Rio de Janeiro",
+        "ocean": "Atlantic Ocean",
+        "mainAttraction": "Lively waterfront & beach culture",
+        "specialFeature": "Famous Rio beachfront setting",
+        "latitude": -22.9711,
+        "longitude": -43.1822
+      },
+      {
+        "name": "Malibu Beach",
+        "country": "United States",
+        "city": "Malibu, California",
+        "ocean": "Pacific Ocean",
+        "mainAttraction": "Surfing & scenic coastline",
+        "specialFeature": "Malibu Pier & coastal hills",
+        "latitude": 34.0259,
+        "longitude": -118.7798
+      }
+    ]
+
+  }
+}
