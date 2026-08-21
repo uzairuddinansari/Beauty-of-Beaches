@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Of Beaches</title>
+    <!-- title IMAGE  -->
+   <link rel="icon" type="image/png" href="./src/bb.png">
+
+     <!-- Style Sheets  -->
+    <link rel="stylesheet" href="./fonts/boska/WEB/css/boska.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style/loader.css">
+    <link rel="stylesheet" href="./style/shutter.css">
+    <link rel="stylesheet" href="./style/nav.css">
+    <link rel="stylesheet" href="./style/hero.css">
+    <link rel="stylesheet" href="./mediaQuiry/media.css">
+    <link rel="stylesheet" href="./style/discover.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="stylesheet" href="./style/location.css">
+    <link rel="stylesheet" href="./mediaQuiry/zoneQuiry.css">
+    <link rel="stylesheet" href="./mediaQuiry/shutter.css">
+    <link rel="stylesheet" href="./style/gellery.css">
+    <link rel="stylesheet" href="./style/ourstory.css">
+    <link rel="stylesheet" href="./style/Chat.css">
+    <link rel="stylesheet" href="./style/sitemap.css">
+    <link rel="stylesheet" href="./mediaQuiry/gelleryMedia.css">
+    <link rel="stylesheet" href="./mediaQuiry/ourstorymedia.css">
+
+    <!-- CDN LINK  -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libertinus+Math&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.11/dist/lenis.css">
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAduK-Y8dTWuIAtpYcds4yGnd_nuilaB5c",
+    authDomain: "beautyofbeaches-e0019.firebaseapp.com",
+    projectId: "beautyofbeaches-e0019",
+    storageBucket: "beautyofbeaches-e0019.firebasestorage.app",
+    messagingSenderId: "1087319653116",
+    appId: "1:1087319653116:web:d7f9c04861e826fed2f579",
+    measurementId: "G-HYYWW5K63V"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+    </script>
+</head>
+<body>
+
+<div id="beach-loader">
+
+    <canvas id="loader-canvas"></canvas>
+
+    <div class="loader-image"></div>
+
+    <div class="loader-overlay"></div>
+
+    <div class="loader-editorial">
+
+        <div class="loader-top">
+            <span>BEAUTY</span>
+            <span>OF</span>
+            <span>BEACHES</span>
+        </div>
+
+        <div class="loader-center">
+
+            <div class="loader-bb">
+                BEAUTY OF BEACHES
+            </div>
+
+            <div class="loader-title">
+                BEAUTY OF BEACHES
+            </div>
+
+            <div class="loader-line"></div>
+
+            <div class="loader-status">
+                DISCOVERING THE SHORE
+            </div>
+
+        </div>
+
+        <div class="loader-bottom">
+
+            <span>EXPLORE THE WORLD</span>
+
+            <span>
+                <b id="loader-percent">0</b>%
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+      <!-- page Cursor -->
+    <div class="custom-cursor">
+    <span></span>
+    </div>
+
+    <!-- chat bot  -->
+    <button id="chatBtn">💬</button>
+    <div class="chat-box" id="chatBox">
+
+    <div class="chat-header">
+        <div>
+            <h3>Shore Guide</h3>
+            <span>🟢 Online</span>
+        </div>
+
+        <button id="closeBtn">✖</button>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+
+        <div class="bot-msg">
+            Hello 👋
+            <br>
+            How can I help you?
+        </div>
+
+    </div>
+
+    <div class="chat-footer">
+        <input type="text" id="message" placeholder="Type a message...">
+        <button id="sendBtn">➤</button>
+    </div>
+
+     </div>
+
+    <!-- Your map -->
+    <div id="map"></div>
+
+    <!-- Map Overlay -->
+    <div class="map-info-overlay">
+
+        <div class="info-content">
+
+            <p class="info-label">CURRENT LOCATION</p>
+
+            <h3 class="info-location">
+                Detecting...
+            </h3>
+
+            <div class="info-details">
+
+                <div class="info-item">
+                    <span class="info-title">DATE</span>
+                    <span class="info-value" id="current-date">
+                        --
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-title">TIME</span>
+                    <span class="info-value" id="current-time">
+                        --
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Circular Trigger -->
+    <button class="time-trigger" aria-label="Open location information">
+
+        <span class="trigger-time">
+            00:00
+        </span>
+
+        <span class="trigger-icon">
+            ↗
+        </span>
+
+    </button>
+
+     <!-- Shutter  -->
+   <div class="Shutter">
+
+    <!-- VIDEO -->
+    <div class="shutter_sec">
+
+        <div class="vid_sec">
+
+            <video
+                src="./video/mixkit-beautiful-beach-surrounded-by-nature-seen-from-above-5371-hd-ready.mp4"
+                autoplay
+                muted
+                loop
+                playsinline>
+            </video>
+      <canvas id="shutterCanvas"></canvas>
+            <div class="overlayer"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="shutter_sec">
+
+        <div class="shutter_frame"></div>
+
+        <div class="shutter_top">
+            <span>BEAUTY</span>
+            <i></i>
+            <span>OF BEACHES</span>
+        </div>
+
+
+        <div class="h1_sec">
+
+            <div class="menu_label">
+                <span>MENU / 04</span>
+            </div>
+
+            <a href="./html/feeback.html">
+                <small>01 — Beauty of beach</small>
+                <h1>Feed back</h1>
+            </a>
+
+            <a href="./html/aboutus.html">
+                <small>02 — Beauty of beach</small>
+                <h1>About Us</h1>
+            </a>
+
+            <a href="./html/quiry.html">
+                <small>03 — Beauty of beach</small>
+                <h1>Queries</h1>
+            </a>
+
+            <a href="./html/Traverl_deals.html">
+                <small>04 — Beauty of beach</small>
+                <h1>Travel Deals</h1>
+            </a>
+
+        </div>
+
+
+        <div class="shutter_bottom">
+            <span>SELECT</span>
+            <div></div>
+            <span>2026</span>
+        </div>
+
+    </div>
+
+    </div>
+     <!-- nav bar -->
+      
+    <nav>
+        <div id="nav-child">
+            <div class="nav-sections">
+               <svg class="click"
+  height="500"
+  viewBox="0 0 700 500"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- TOP WAVE -->
+  <path
+    d="M 100 207
+       C 150 165, 195 175, 250 195
+       C 310 218, 365 230, 430 185
+       C 450 172, 465 160, 480 150"
+    fill="none"
+    stroke="#fff"
+    stroke-width="13"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M 100 207
+       C 150 165, 195 175, 250 195
+       C 310 218, 365 230, 430 185
+       C 450 172, 465 160, 480 150"
+    fill="none"
+    stroke="#fff"
+    stroke-width="11"
+    stroke-linecap="round"
+  />
+
+  <!-- BOTTOM WAVE -->
+  <path
+    d="M 100 283
+       C 150 241, 195 251, 250 271
+       C 310 294, 365 306, 430 261
+       C 450 248, 465 236, 480 226"
+    fill="none"
+    stroke="#fff"
+    stroke-width="13"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M 100 283
+       C 150 241, 195 251, 250 271
+       C 310 294, 365 306, 430 261
+       C 450 248, 465 236, 480 226"
+    fill="none"
+    stroke="#fff"
+    stroke-width="11"
+    stroke-linecap="round"
+  />
+             </svg>
+            </div>
+            <div class="nav-sections" id="nav-last-section">
+                <a href="#gellery"><h3>Gallery</h3></a>
+                <a href="#zone"><h3>OurZone</h3></a>
+                <a href="#premium-footer"><h3>ContactUS</h3></a>
+            </div>
+            <div class="nav-sections">
+                <img src="./src/whitelogo.webp" alt="">
+            </div>
+            
+        </div>
+    </nav>
+
+    <!-- Live Visitor -->
+     <div class="visitor-peek" id="visitorPeek">
+    <div class="visitor-peek-inner">
+        <div class="visitor-live">
+            <span class="visitor-dot"></span>
+            <div>
+                <strong id="liveVisitors">0</strong>
+                <span>VISITORS ONLINE</span>
+            </div>
+        </div>
+        <div class="visitor-total">
+            <strong id="totalVisitors">0</strong>
+            <span>TOTAL VISITORS</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- main section -->
+    <main>
+        <!-- section 1  -->
+       <section class="beach-hero" id="hero">
+
+    <!-- VIDEO -->
+    <div class="hero-media">
+        <video
+            id="heroVideo"
+            class="hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+        >
+            <source src="./video/Beach Background Video for Website Slider.  Background video Dron.  Slider background video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- THREE.JS EFFECT CANVAS -->
+    <canvas id="heroCanvas"></canvas>
+
+    <!-- CINEMATIC OVERLAY -->
+    <div class="hero-overlay"></div>
+    <div class="hero-vignette"></div>
+
+    <!-- CONTENT -->
+    <div class="hero-content">
+
+        <div class="hero-kicker">
+            <span class="kicker-line"></span>
+            <span>BEAUTY OF BEACHES</span>
+        </div>
+
+        <h1 class="hero-title" style="font-family: 'Boska-Medium';">
+            <span class="hero-line-text">WHERE THE</span>
+            <span class="hero-line-text">WORLD <span style="color: #7C8fa2;">MEETS</span> </span>
+            <span class="hero-line-text hero-last">
+                THE SEA<span class="hero-dot">.</span>
+            </span>
+        </h1>
+
+        <div class="hero-info">
+
+            <p style=" font-family: '1st' , peridot-pe-variable ;">
+                Discover extraordinary coastlines,
+                hidden shores and places worth
+                getting lost in.
+            </p>
+
+            <a href="#zone" class="hero-button">
+                <span style=" font-family: '1st' , peridot-pe-variable ;">EXPLORE BEACHES</span>
+
+                <span class="button-circle" style=" font-family: '1st' , peridot-pe-variable ;">
+                    ↗
+                </span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM META -->
+    <div class="hero-bottom">
+
+        <div class="hero-place">
+            <span class="live-dot"></span>
+            <span>EARTH / COASTLINES</span>
+        </div>
+
+        <div class="hero-scroll">
+            <span>SCROLL TO EXPLORE</span>
+            <span>↓</span>
+        </div>
+
+        <div class="hero-number">
+            <span>01</span>
+            <i></i>
+            <span>04</span>
+        </div>
+
+    </div>
+
+</section>
+        <!-- section 2 -->
+       <section class="page2">
+
+        <h1 class="DISCOVER">
+            DISCOVER THE <br> BEST <span style="color: #7C8fa2;">BEACHES</span>  <br> ON EARTH
+        </h1>
+    </section>
+
+    <div class="Zone" id="zone">
+      <div class="zone_sec">
+        <div class="zone_img">
+            <img src="./src/Discover beach/ChatGPT Image Aug 12, 2026, 08_30_47 PM.webp" alt="">
+        </div>
+        <div class="zone_img">
+            <img src="./src/Discover beach/north.webp" alt="">
+        </div>
+        <div class="zone_img">
+            <img src="./src/Discover beach/south.webp" alt="">
+        </div>
+        <div class="zone_img">
+           <img src="./src/Discover beach/East.webp" alt="">
+        </div>
+        <div class="zone_img">
+          <img src="./src/Discover beach/west.webp" alt="">
+        </div>
+      </div>
+      <div class="zone_sec">
+        <div class="zone_area">
+        <small>Beauty of</small>
+        <a href="./html/northzone.html"> <h1>NORTH Beaches</h1></a>
+        </div>
+        <div class="zone_area">
+        <svg class="leaf" viewBox="0 0 100 100" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+        <path d="M90 10C50 15 20 35 15 70C12 88 25 95 40 82C65 60 78 35 90 10Z"/>
+        <path d="M18 82C35 65 55 45 82 18"/>
+          </svg>
+            <small>Beauty of</small>
+         <a href="./html/southzone.html"><h1> SOUTH Beaches</h1></a>
+        </div>
+        <div class="zone_area">
+       
+       <svg class="leaf" style="right: 50%; top: 50%;" viewBox="0 0 100 100" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+        <path d="M90 10C50 15 20 35 15 70C12 88 25 95 40 82C65 60 78 35 90 10Z"/>
+        <path d="M18 82C35 65 55 45 82 18"/>
+          </svg>
+            <small>Beauty of</small>
+        <a href="./html/eastzone.html"> <h1> EAST Beaches</h1></a>
+        </div>
+        <div class="zone_area">
+            <small>Beauty of</small>
+         <a href="./html/westzone.html"><h1> West Beaches</h1></a>
+        </div>
+      </div>
+    </div>
+  
+    <section class="our_story">
+        <div class="heading_sec">
+            <h3>Explore</h3>
+            <h3 style="font-family: 'stylish'; font-size: 2.5vw;">Our Story</h3>
+            <h3>Beyond The Shore</h3>
+        </div>
+        <div class="story_main">
+            <div class="story_sec">
+                <img src="./src/our Story/rorateWater.webp" alt="">
+            </div>
+            <div class="story_sec">
+                <h1 id="story">OUR STORY</h1>
+                <div id="style"><h1>The Journey</h1></div>
+             <p>Every shore has a story waiting to be discovered. BeautyOfBeaches brings together some of the world's most beautiful beaches, their unique character, and the experiences they offer. Our journey is simply about discovering the beauty of the coast — one beach at a time</p>
+            </div>
+            <div class="story_sec">
+                <img src="./src/our Story/thibaut-charp-XY_frpm2Mzs-unsplash.webp" alt="">
+            </div>
+        </div>
+    </section>
+
+   <div class="heading_sec2">
+            <h3>Explore</h3>
+            <h3 style="font-family: 'stylish'; font-size: 2.5vw;">Gellery</h3>
+            <h3>Beauty of Beaches</h3>
+        </div>
+    <div class="gellery" id="gellery">
+         
+        <div class="gellery_sec">
+            
+            <div class="gellery1st_img">
+                <div class="img_overlay"></div>
+                <div class="gelery1_img_text">
+                    <h1 style="font-family: stylish;">S1</h1>
+                    <p>Southern shores bring a slower rhythm, where soft sands, peaceful waters and long coastal views create the perfect escape.</p>
+                </div>
+            </div>
+        </div>
+        <div class="gellery_sec">
+            <div class="gellery2_img">
+                <div class="gelery2_img_text">
+                     <div class="img_overlay2"></div>
+                    <div class="gelery2_img_text">
+                    <h1 style="font-family: stylish;">N1</h1>
+                    <p>Northern beaches carry a raw, open beauty — dramatic coastlines, clear waters and landscapes that feel untouched.</p>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="gellery_sec">
+             <div class="gellery3_img">
+                <div class="gelery3_img_text">
+                     <div class="img_overlay3"></div>
+                    <div class="gelery3_img_text">
+                    <h1 style="font-family: stylish;">W1</h1>
+                    <p>Western shores are made for golden evenings, warm light and sunsets that turn the ocean into a moment worth remembering.</p>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="gellery_sec">
+             <div class="gellery4_img">
+                <div class="gelery4_img_text">
+                     <div class="img_overlay4"></div>
+                    <div class="gelery4_img_text">
+                    <h1 style="font-family: stylish;">E1</h1>
+                    <p>Eastern beaches welcome the day with golden sunrises, lively shores and some of the world's most unforgettable coastal views.</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    
+     <!-- SITE MAP SECTION -->
+
+
+<section class="site-map">
+
+    <div class="site-map-head">
+
+        <div class="site-map-meta">
+            <span>04 / SITE MAP</span>
+            <span>EXPLORE THE COASTLINE</span>
+        </div>
+
+        <div class="site-map-title-wrap">
+            <h2 class="site-map-title">
+                FIND YOUR
+                <span style="color: #7C8fa2;">HORIZON.</span>
+            </h2>
+        </div>
+
+        <p class="site-map-intro">
+            From the northern shores to the southern coast,
+            discover where your next escape begins.
+        </p>
+
+    </div>
+
+
+    <div class="map-stage">
+
+        <!-- decorative coordinates -->
+        <div class="map-coordinate map-coordinate-1">
+            33° 51' 35" S
+        </div>
+
+        <div class="map-coordinate map-coordinate-2">
+            151° 12' 40" E
+        </div>
+
+
+        <!-- SVG MAP -->
+        <svg
+            class="world-map"
+            viewBox="0 0 1200 650"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+
+            <!-- abstract coastline -->
+            <path
+                class="coast coast-1"
+                d="M157 184
+                   C198 137 248 151 270 187
+                   C293 222 325 210 348 239
+                   C371 267 346 306 373 333
+                   C400 360 438 347 454 381
+                   C470 415 438 448 407 454
+                   C375 460 351 439 319 451
+                   C287 464 267 496 231 482
+                   C194 468 180 430 151 411
+                   C123 393 91 399 74 369
+                   C57 339 83 312 106 294
+                   C130 276 126 232 157 184Z"
+            />
+
+            <path
+                class="coast coast-2"
+                d="M561 116
+                   C590 95 624 107 638 134
+                   C652 160 686 157 704 179
+                   C722 202 707 229 726 250
+                   C744 270 781 267 798 294
+                   C814 320 798 350 772 361
+                   C747 371 727 355 705 369
+                   C680 385 682 418 656 433
+                   C627 450 599 430 579 409
+                   C557 386 526 392 510 369
+                   C494 345 512 319 528 298
+                   C546 276 531 242 548 217
+                   C564 193 545 168 548 146
+                   C550 134 554 123 561 116Z"
+            />
+
+            <path
+                class="coast coast-3"
+                d="M885 164
+                   C914 141 948 150 963 178
+                   C977 204 1007 203 1025 224
+                   C1045 248 1030 277 1050 297
+                   C1070 318 1101 316 1118 341
+                   C1136 369 1119 398 1091 405
+                   C1061 413 1043 392 1018 405
+                   C988 420 985 450 958 463
+                   C928 477 903 451 883 430
+                   C860 406 830 412 814 388
+                   C797 362 814 337 832 317
+                   C850 295 838 260 854 237
+                   C870 214 852 188 858 174
+                   C864 168 873 165 885 164Z"
+            />
+
+
+            <!-- ROUTES -->
+
+            <path
+                class="map-route route-north"
+                d="M205 207 C350 80 545 90 650 155"
+            />
+
+            <path
+                class="map-route route-east"
+                d="M650 155 C795 175 890 240 1015 280"
+            />
+
+            <path
+                class="map-route route-south"
+                d="M1015 280 C930 420 750 490 595 425"
+            />
+
+            <path
+                class="map-route route-west"
+                d="M595 425 C440 500 285 460 205 207"
+            />
+
+
+            <!-- CROSS ROUTES -->
+
+            <path
+                class="map-route map-route-light"
+                d="M205 207 C420 300 760 275 1015 280"
+            />
+
+            <path
+                class="map-route map-route-light"
+                d="M650 155 C630 260 620 345 595 425"
+            />
+
+
+            <!-- NORTH NODE -->
+
+            <g
+                class="map-node"
+                data-zone="north"
+                transform="translate(205 207)"
+            >
+
+                <circle class="node-ring" r="20"/>
+                <circle class="node-dot" r="5"/>
+
+            </g>
+
+
+            <!-- EAST NODE -->
+
+            <g
+                class="map-node"
+                data-zone="east"
+                transform="translate(1015 280)"
+            >
+
+                <circle class="node-ring" r="20"/>
+                <circle class="node-dot" r="5"/>
+
+            </g>
+
+
+            <!-- SOUTH NODE -->
+
+            <g
+                class="map-node"
+                data-zone="south"
+                transform="translate(595 425)"
+            >
+
+                <circle class="node-ring" r="20"/>
+                <circle class="node-dot" r="5"/>
+
+            </g>
+
+
+            <!-- WEST NODE -->
+
+            <g
+                class="map-node"
+                data-zone="west"
+                transform="translate(650 155)"
+            >
+
+                <circle class="node-ring" r="20"/>
+                <circle class="node-dot" r="5"/>
+
+            </g>
+
+
+            <!-- EXTRA BEACH POINTS -->
+
+            <circle class="beach-point" cx="300" cy="170" r="3"/>
+            <circle class="beach-point" cx="410" cy="285" r="3"/>
+            <circle class="beach-point" cx="735" cy="205" r="3"/>
+            <circle class="beach-point" cx="875" cy="325" r="3"/>
+            <circle class="beach-point" cx="760" cy="410" r="3"/>
+            <circle class="beach-point" cx="420" cy="420" r="3"/>
+
+        </svg>
+
+
+        <!-- ZONE INFORMATION -->
+
+        <div class="zone-card zone-north">
+
+            <span class="zone-index">01</span>
+
+            <div>
+                <small>NORTH</small>
+                <h3>Wild Shores</h3>
+            </div>
+
+            <a href="#north">
+                EXPLORE <span>↗</span>
+            </a>
+
+        </div>
+
+
+        <div class="zone-card zone-east">
+
+            <span class="zone-index">02</span>
+
+            <div>
+                <small>EAST</small>
+                <h3>Blue Horizons</h3>
+            </div>
+
+            <a href="#east">
+                EXPLORE <span>↗</span>
+            </a>
+
+        </div>
+
+
+        <div class="zone-card zone-south">
+
+            <span class="zone-index">03</span>
+
+            <div>
+                <small>SOUTH</small>
+                <h3>Golden Coast</h3>
+            </div>
+
+            <a href="#south">
+                EXPLORE <span>↗</span>
+            </a>
+
+        </div>
+
+
+        <div class="zone-card zone-west">
+
+            <span class="zone-index">04</span>
+
+            <div>
+                <small>WEST</small>
+                <h3>Endless Blue</h3>
+            </div>
+
+            <a href="#west">
+                EXPLORE <span>↗</span>
+            </a>
+
+        </div>
+
+
+        <!-- CENTER LABEL -->
+
+        <div class="map-center">
+
+            <span class="center-line"></span>
+
+            <span class="center-text">
+                BEAUTY OF<br>
+                BEACHES
+            </span>
+
+            <span class="center-coordinates">
+                00° 00' 00" / 00° 00' 00"
+            </span>
+
+        </div>
+
+
+        <!-- MOUSE POSITION -->
+
+        <div class="map-mouse">
+            <span>X</span>
+            <b>000</b>
+        </div>
+
+    </div>
+
+
+    <div class="site-map-footer">
+
+        <span>
+            04 ZONES / 01 JOURNEY
+        </span>
+
+        <span>
+            MOVE THROUGH THE MAP
+        </span>
+
+        <span>
+            EST. 2026
+        </span>
+
+    </div>
+
+</section>
+
+
+    </main>
+
+     <!-- Footer  -->
+     <footer class="premium-footer" id="premium-footer">
+    <div class="footer-main">
+        <!-- LEFT -->
+        <div class="footer-left">
+            <span class="footer-label">
+                EXPLORE
+            </span>
+            <h3>
+                Four directions.<br>
+                Endless shores.
+            </h3>
+            <p>
+                Discover beaches across the world's
+                most beautiful coastal zones.
+            </p>
+            <div class="footer-links">
+                <a href="./html/northzone.html">NORTH</a>
+                <a href="./html/southzone.html">SOUTH</a>
+                <a href="./html/eastzone.html">EAST</a>
+                <a href="./html/westzone.html">WEST</a>
+            </div>
+
+        </div>
+
+
+        <!-- CENTER IMAGE -->
+        <div class="footer-center">
+
+            <div class="footer-image-wrap">
+
+                <div class="footer-image-overlay"></div>
+
+                <img
+                    src="./src/footer/beaches foter pic.webp"
+                    alt="Beautiful beach"
+                    class="footer-image"
+                >
+
+                <div class="footer-image-text">
+                    <span>KEEP</span>
+                    <span>EXPLORING</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+        <div class="footer-right">
+
+            <span class="footer-label">
+                CONTACT US
+            </span>
+
+            <h3>
+                Let's talk<br>
+                about your<br>
+                next escape.
+            </h3>
+
+            <a
+                href="mailto:hello@beautyofbeaches.com"
+                class="footer-email"
+            >
+                hello@beautyofbeaches.com
+            </a>
+
+            <div class="footer-contact">
+
+                <span>
+                    Karachi, Pakistan
+                </span>
+
+                <span>
+                    24°51′N 67°00′E
+                </span>
+
+            </div>
+
+            <div class="footer-socials">
+
+                <a href="https://www.instagram.com/beauty_ofbeaches/" target="_blank">INSTAGRAM</a>
+                <a href="https://www.facebook.com/profile.php?id=61593470726468" target="_blank">FACEBOOK</a>
+            
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BIG TITLE -->
+
+    <div class="footer-title">
+
+        <div class="footer-title-line">
+
+            <span>BEAUTY</span>
+
+            <span>OF</span>
+
+        </div>
+
+        <div class="footer-title-line">
+
+            <span>BEACHES</span>
+
+            <span class="footer-arrow">↗</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 BEAUTY OF BEACHES
+        </span>
+
+        <span>
+            DESIGNED FOR THE COAST
+        </span>
+
+        <a href="#hero">
+            BACK TO TOP ↑
+        </a>
+
+    </div>
+
+     </footer>
+
+   <!-- CDN LINKS  -->
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
+   
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/all.min.js" integrity="sha512-4TkOavuOc65oG2lOTBdhfdLw9Bpr9tm0D53Kuk4rFVyV/RsXw5gmnYurKlwksWA9336K23TsgQhE0Mw568nKsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js"></script>
+    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
+    <script src="https://unpkg.com/split-type"></script>
+
+     <!-- ALL SCRIPT  -->
+    <script  src="./script/loader.js"></script>
+    <script src="./script/sitemap.js"></script>
+    <script src="./script/chat.js"></script>
+    <script src="./script/shutter.js"></script>
+    <script type="module" src="./script/js.js"></script>
+    <script src="./script/footer.js"></script>
+    <script src="./script/hero.js"></script>
+    <script src="./script/lennis.js"></script>
+    <script src="./script/location.js"></script>
+     <script src="./script/Discover.js"></script>
+    <script src="./script/ourstory.js"></script>
+      <script src="./script/gellery.js"></script>
+</body>
+</html>
+

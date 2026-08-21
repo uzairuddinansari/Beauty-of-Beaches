@@ -1,0 +1,323 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+   overflow-x: hidden;
+   scrollbar-width: none;
+   background-color: #F8F7F3;
+   cursor: none;
+}
+a{
+    text-decoration: none;
+    color: #111;
+}
+@font-face {
+    font-family: "1st";
+    src: url("./fonts/BlackerProDis-Lt.woff2") format("woff2");
+
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "2font";
+    src: url("./fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBHMdazQ.woff2") format("woff2");
+
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "3font";
+    src: url("./fonts/l.woff2") format("woff2");
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "stylish";
+    src: url("./fonts/AlexBrush-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    background: #fff;
+
+    pointer-events: none;
+
+     z-index: 2147483647 !important;
+
+    mix-blend-mode: difference;
+
+    transform: translate3d(-50%, -50%, 0) scale(1);
+
+    will-change: transform;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        width 0.35s cubic-bezier(.16, 1, .3, 1),
+        height 0.35s cubic-bezier(.16, 1, .3, 1),
+        background 0.3s ease;
+}
+
+
+.custom-cursor span {
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: #000;
+
+    opacity: 0;
+
+    transform: scale(0);
+
+    transition:
+        transform 0.3s cubic-bezier(.16, 1, .3, 1),
+        opacity 0.25s ease;
+}
+
+.custom-cursor.is-hover {
+    width: 65px;
+    height: 65px;
+}
+
+.custom-cursor.is-hover span {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+.custom-cursor.is-image {
+    width: 85px;
+    height: 85px;
+}
+
+
+
+
+.custom-cursor.is-click {
+    transform: translate3d(-50%, -50%, 0) scale(0.75);
+}
+
+
+@media (max-width: 768px) {
+    .custom-cursor {
+        display: none;
+    } 
+}
+@media (max-width: 908px) {
+    .custom-cursor {
+        display: none;
+    } 
+}
+@media (max-width: 1208px) {
+    .custom-cursor {
+        display: none;
+    } 
+}
+
+
+
+
+
+.visitor-peek {
+    --visitor-width: 190px;
+    position: fixed;
+    top: 120px;
+    right: 0;
+    width: var(--visitor-width);
+    z-index: 9998;
+    transform: translateX(calc(100% - 18px));
+    transition:
+        transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+    pointer-events: auto;
+}
+
+
+/* Show when hovering */
+
+.visitor-peek:hover {
+    transform: translateX(0);
+}
+
+.visitor-peek-inner {
+    padding: 15px 18px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.10);
+    backdrop-filter: blur(12px);
+}
+
+
+
+.visitor-live {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+
+/* Green live dot */
+
+.visitor-dot {
+
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #19c37d;
+
+    box-shadow:
+        0 0 0 4px rgba(25, 195, 125, 0.12);
+
+    animation: visitorPulse 1.8s ease-in-out infinite;
+
+}
+
+
+@keyframes visitorPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.45;
+        transform: scale(0.8);
+    }
+
+}
+
+
+.visitor-peek strong {
+
+    display: block;
+
+    font-size: 18px;
+
+    line-height: 1;
+
+    font-weight: 600;
+
+}
+
+
+.visitor-peek span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 9px;
+
+    letter-spacing: 0.12em;
+
+    opacity: 0.55;
+
+}
+
+.visitor-total {
+
+    padding-top: 11px;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+}
+
+@media (max-width: 600px) {
+
+    .visitor-peek {
+
+        --visitor-width: 165px;
+
+        top: 75px;
+
+    }
+
+    .visitor-peek-inner {
+
+        padding: 13px 15px;
+
+    }
+
+}
+
+.visitor-peek.visitor-intro {
+    transform: translateX(0);
+}
+
+.visitor-peek.visitor-hide {
+    transform: translateX(calc(100% - 18px));
+}
+
+/* Hover = always show */
+.visitor-peek:hover {
+    transform: translateX(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
