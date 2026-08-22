@@ -177,7 +177,7 @@ travelCards.forEach(card => {
         // =================================================
 
         sessionStorage.setItem(
-            "selectedTransport",
+            "travelData",
             JSON.stringify(transport)
         );
 
@@ -187,7 +187,7 @@ travelCards.forEach(card => {
         // =================================================
 
         const checkoutPath = new URL(
-            "../html/checkout.html",
+            "./checkout.html",
             window.location.href
         ).href;
 
