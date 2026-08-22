@@ -122,7 +122,6 @@ travelCards.forEach(card => {
         const y =
             (e.clientY - rect.top - rect.height / 2) * 0.12;
 
-
         buttonX(x);
         buttonY(y);
 
@@ -156,9 +155,13 @@ travelCards.forEach(card => {
     button.addEventListener("click", function (e) {
 
         e.preventDefault();
+        e.stopPropagation();
 
 
-        // Get selected transport
+        // =================================================
+        // GET SELECTED TRANSPORT
+        // =================================================
+
         const transport = {
 
             name: card.dataset.name,
@@ -169,15 +172,31 @@ travelCards.forEach(card => {
         };
 
 
-        // Save transport
+        // =================================================
+        // SAVE TRANSPORT
+        // =================================================
+
         sessionStorage.setItem(
             "selectedTransport",
             JSON.stringify(transport)
         );
 
 
-        // Go to checkout
-        window.location.assign("checkout.html");
+        // =================================================
+        // GITHUB PAGES CHECKOUT PATH
+        // =================================================
+
+        const checkoutPath = new URL(
+            "../html/checkout.html",
+            window.location.href
+        ).href;
+
+
+        // =================================================
+        // OPEN CHECKOUT
+        // =================================================
+
+        window.location.href = checkoutPath;
 
     });
 
