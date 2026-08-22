@@ -1,10 +1,5 @@
 const travelCards = document.querySelectorAll(".travel_card");
 
-
-// =========================================================
-// CARD SCROLL ANIMATION
-// =========================================================
-
 if (travelCards.length) {
 
     gsap.fromTo(
@@ -19,7 +14,6 @@ if (travelCards.length) {
             duration: 0.8,
             stagger: 0.1,
             ease: "power2.out",
-
             scrollTrigger: {
                 trigger: ".travel_cards",
                 start: "top 80%",
@@ -30,21 +24,11 @@ if (travelCards.length) {
 
 }
 
-
-// =========================================================
-// TRAVEL CARDS
-// =========================================================
-
 travelCards.forEach(card => {
 
     const button = card.querySelector(".travel_btn");
 
     if (!button) return;
-
-
-    // =====================================================
-    // CARD HOVER
-    // =====================================================
 
     const cardY = gsap.quickTo(
         card,
@@ -54,11 +38,6 @@ travelCards.forEach(card => {
             ease: "power2.out"
         }
     );
-
-
-    // =====================================================
-    // BUTTON MAGNETIC EFFECT
-    // =====================================================
 
     const buttonX = gsap.quickTo(
         button,
@@ -78,21 +57,9 @@ travelCards.forEach(card => {
         }
     );
 
-
-    // =====================================================
-    // CARD MOUSE ENTER
-    // =====================================================
-
     card.addEventListener("mouseenter", () => {
-
         cardY(-8);
-
     });
-
-
-    // =====================================================
-    // CARD MOUSE LEAVE
-    // =====================================================
 
     card.addEventListener("mouseleave", () => {
 
@@ -107,14 +74,10 @@ travelCards.forEach(card => {
 
     });
 
-
-    // =====================================================
-    // BUTTON MOUSE MOVE
-    // =====================================================
-
     button.addEventListener("mousemove", (e) => {
 
-        const rect = button.getBoundingClientRect();
+        const rect =
+            button.getBoundingClientRect();
 
         const x =
             (e.clientX - rect.left - rect.width / 2) * 0.12;
@@ -127,49 +90,50 @@ travelCards.forEach(card => {
 
     });
 
-
-    // =====================================================
-    // BUTTON MOUSE LEAVE
-    // =====================================================
-
     button.addEventListener("mouseleave", () => {
 
         gsap.to(button, {
-
             x: 0,
             y: 0,
-
             duration: 0.4,
-
             ease: "power2.out"
-
         });
 
     });
 
+    button.addEventListener("click", function (e) {
 
-    // =====================================================
-    // CHECK OUT BUTTON
-    // =====================================================
+        e.preventDefault();
 
-button.onclick = function () {
+        const transport = {
+            name: card.dataset.name,
+            pricePerHour: Number(card.dataset.price)
+        };
 
-    const transport = {
-        name: card.dataset.name,
-        pricePerHour: Number(card.dataset.price)
-    };
-
-    sessionStorage.setItem(
-        "travelData",
-        JSON.stringify(transport)
-    );
-
-    window.location.href =
-        window.location.origin +
-        window.location.pathname.replace(
-            /[^/]+$/,
-            "checkout.html"
+        sessionStorage.setItem(
+            "travelData",
+            JSON.stringify(transport)
         );
-};
+
+        const checkoutURL =
+            new URL(
+                "./checkout.html",
+                window.location.href
+            );
+
+        checkoutURL.searchParams.set(
+            "transport",
+            transport.name
+        );
+
+        checkoutURL.searchParams.set(
+            "price",
+            transport.pricePerHour
+        );
+
+        window.location.href =
+            checkoutURL.href;
+
+    });
 
 });
