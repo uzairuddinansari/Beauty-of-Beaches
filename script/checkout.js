@@ -1,3 +1,28 @@
+const checkoutParams = new URLSearchParams(window.location.search);
+
+const selectedTransport = checkoutParams.get("transport");
+const selectedPrice = checkoutParams.get("price");
+
+if (selectedTransport && selectedPrice) {
+    let existingData = {};
+
+    try {
+        existingData =
+            JSON.parse(sessionStorage.getItem("travelData")) || {};
+    } catch (error) {
+        existingData = {};
+    }
+
+    existingData.transport = selectedTransport;
+    existingData.price = Number(selectedPrice);
+    existingData.pricePerHour = Number(selectedPrice);
+
+    sessionStorage.setItem(
+        "travelData",
+        JSON.stringify(existingData)
+    );
+}
+
 const bookingForm = document.querySelector("#bookingForm");
 const nameInput = document.querySelector("#name");
 const phoneInput = document.querySelector("#phone");
@@ -9,14 +34,6 @@ const popupBeach = document.querySelector("#popupBeach");
 const popupTotal = document.querySelector("#popupTotal");
 const popupClose = document.querySelector("#popupClose");
 
-const params = new URLSearchParams(window.location.search);
-
-const selectedTransport = {
-    name: params.get("transport"),
-    pricePerHour: Number(params.get("price"))
-};
-
-console.log(selectedTransport);
 emailjs.init({
     publicKey: "BzGltKCOegYcIM4YV"
 });
@@ -28,7 +45,6 @@ bookingForm.addEventListener("submit", async (e) => {
     const name = nameInput.value.trim();
     const phone = phoneInput.value.trim();
     const email = emailInput.value.trim();
-
 
     if (!name || !phone || !email) {
         alert("Please fill all fields.");
@@ -48,16 +64,14 @@ bookingForm.addEventListener("submit", async (e) => {
         alert("Please select your beach first.");
         return;
     }
-    const finalBooking = {
 
+    const finalBooking = {
         customer: {
             name: name,
             phone: phone,
             email: email
         },
-
         travel: travelData
-
     };
 
     sessionStorage.setItem(
@@ -65,15 +79,14 @@ bookingForm.addEventListener("submit", async (e) => {
         JSON.stringify(finalBooking)
     );
 
-
     popupTransport.textContent =
-        travelData.transport;
+        travelData.transport || "—";
 
     popupBeach.textContent =
-        travelData.beach;
+        travelData.beach || "—";
 
     popupTotal.textContent =
-        `$${Number(travelData.total).toFixed(2)}`;
+        `$${Number(travelData.total || 0).toFixed(2)}`;
 
     popup.classList.add("active");
 
@@ -84,21 +97,16 @@ bookingForm.addEventListener("submit", async (e) => {
         const ticket =
             generateTicketPDF(finalBooking);
 
-
-        // Upload PDF to Cloudinary
         const ticketUrl =
             await uploadTicketPDF(
                 ticket.pdf,
                 ticket.ticketId
             );
 
-
-        // Send confirmation email
         await emailjs.send(
             "service_9lcovpr",
             "template_psapi7g",
             {
-
                 customer_name:
                     name,
 
@@ -113,16 +121,32 @@ bookingForm.addEventListener("submit", async (e) => {
 
                 beach:
                     travelData.beach,
-                zone:travelData.zone,
-                distance: Number(travelData.distance ).toFixed(1),
-                hours: Number( travelData.hours ).toFixed(2),
-                total:`$${Number(travelData.total).toFixed(2)}`,
-                booking_id:ticket.ticketId,
-                // Cloudinary PDF link
-                ticket_url:ticketUrl
+
+                zone:
+                    travelData.zone,
+
+                distance:
+                    Number(
+                        travelData.distance
+                    ).toFixed(1),
+
+                hours:
+                    Number(
+                        travelData.hours
+                    ).toFixed(2),
+
+                total:
+                    `$${Number(
+                        travelData.total
+                    ).toFixed(2)}`,
+
+                booking_id:
+                    ticket.ticketId,
+
+                ticket_url:
+                    ticketUrl
             }
         );
-
 
         console.log(
             "Confirmation email sent."
@@ -138,7 +162,6 @@ bookingForm.addEventListener("submit", async (e) => {
     }
 
 });
-
 
 popupClose.addEventListener("click", () => {
 
@@ -160,15 +183,17 @@ popupClose.addEventListener("click", () => {
         map.removeLayer(userMarker);
         userMarker = null;
     }
-    if (beachMarker) {
 
+    if (beachMarker) {
         map.removeLayer(beachMarker);
         beachMarker = null;
     }
+
     if (routeLine) {
         map.removeLayer(routeLine);
         routeLine = null;
     }
+
     userLocation = null;
 
     distanceKm = 0;
@@ -187,29 +212,40 @@ popupClose.addEventListener("click", () => {
     priceResult.textContent = "—";
 
     summaryTransport.textContent = "—";
+
     summaryBeach.textContent =
         "Choose Beach";
+
     summaryZoneText.textContent =
         "Select your destination";
+
     summaryZone.textContent =
         "DESTINATION";
+
     summaryDistance.textContent =
         "0 KM";
+
     summaryTime.textContent =
         "0 Hours";
+
     summaryTotal.textContent =
         "$0.00";
+
     sessionStorage.removeItem(
         "travelData"
     );
+
     sessionStorage.removeItem(
         "finalBooking"
     );
+
 });
 
 function generateTicketPDF(booking) {
+
     const { jsPDF } =
         window.jspdf;
+
     const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -223,8 +259,10 @@ function generateTicketPDF(booking) {
             .toString(36)
             .substring(2, 8)
             .toUpperCase();
+
     const qrContainer =
         document.createElement("div");
+
     new QRCode(
         qrContainer,
         {
@@ -235,21 +273,24 @@ function generateTicketPDF(booking) {
                 QRCode.CorrectLevel.M
         }
     );
+
     const qrCanvas =
         qrContainer.querySelector(
             "canvas"
         );
+
     if (!qrCanvas) {
         throw new Error(
             "QR Code could not be generated."
         );
-
     }
+
     const qrImage =
         qrCanvas.toDataURL(
             "image/jpeg",
             0.5
         );
+
     pdf.setFillColor(
         17,
         17,
@@ -264,7 +305,6 @@ function generateTicketPDF(booking) {
         "F"
     );
 
-
     pdf.setTextColor(
         255,
         255,
@@ -278,7 +318,6 @@ function generateTicketPDF(booking) {
         20,
         20
     );
-
 
     pdf.setFontSize(9);
 
@@ -301,7 +340,6 @@ function generateTicketPDF(booking) {
         20,
         58
     );
-
 
     pdf.setFontSize(10);
 
@@ -331,7 +369,6 @@ function generateTicketPDF(booking) {
         82
     );
 
-
     pdf.setFontSize(15);
 
     pdf.text(
@@ -340,7 +377,6 @@ function generateTicketPDF(booking) {
         90
     );
 
-
     pdf.setFontSize(12);
 
     pdf.text(
@@ -348,7 +384,6 @@ function generateTicketPDF(booking) {
         20,
         110
     );
-
 
     pdf.setDrawColor(
         220,
@@ -363,9 +398,7 @@ function generateTicketPDF(booking) {
         114
     );
 
-
     pdf.setFontSize(10);
-
 
     pdf.text(
         `Name: ${booking.customer.name}`,
@@ -373,13 +406,11 @@ function generateTicketPDF(booking) {
         125
     );
 
-
     pdf.text(
         `Email: ${booking.customer.email}`,
         20,
         133
     );
-
 
     pdf.text(
         `Phone: ${booking.customer.phone}`,
@@ -388,6 +419,7 @@ function generateTicketPDF(booking) {
     );
 
     pdf.setFontSize(12);
+
     pdf.text(
         "TRAVEL DETAILS",
         20,
@@ -409,20 +441,17 @@ function generateTicketPDF(booking) {
         175
     );
 
-
     pdf.text(
         `Zone: ${booking.travel.zone}`,
         20,
         183
     );
 
-
     pdf.text(
         `Transport: ${booking.travel.transport}`,
         20,
         191
     );
-
 
     pdf.text(
         `Distance: ${Number(
@@ -432,7 +461,6 @@ function generateTicketPDF(booking) {
         199
     );
 
-
     pdf.text(
         `Travel Time: ${Number(
             booking.travel.hours
@@ -440,23 +468,27 @@ function generateTicketPDF(booking) {
         20,
         207
     );
+
     pdf.setFillColor(
         17,
         17,
         17
     );
+
     pdf.rect(
         20,
         220,
         170,
         20,
         "F"
-    )
+    );
+
     pdf.setTextColor(
         255,
         255,
         255
     );
+
     pdf.setFontSize(10);
 
     pdf.text(
@@ -474,8 +506,8 @@ function generateTicketPDF(booking) {
         150,
         232
     );
-    pdf.addImage(
 
+    pdf.addImage(
         qrImage,
         "JPEG",
         135,
@@ -486,13 +518,11 @@ function generateTicketPDF(booking) {
         "FAST"
     );
 
-
     pdf.setTextColor(
         100,
         100,
         100
     );
-
 
     pdf.setFontSize(8);
 
@@ -508,14 +538,13 @@ function generateTicketPDF(booking) {
         120
     );
 
-
     pdf.setFontSize(9);
+
     pdf.text(
         "Thank you for choosing BeautyOfBeaches.",
         20,
         265
     );
-
 
     pdf.text(
         "Please keep this ticket for your journey.",
@@ -523,9 +552,7 @@ function generateTicketPDF(booking) {
         272
     );
 
-
     pdf.setFontSize(8);
-
 
     pdf.text(
         "© BeautyOfBeaches — Travel Beyond Boundaries",
@@ -534,23 +561,23 @@ function generateTicketPDF(booking) {
     );
 
     return {
-
         pdf: pdf,
-
         ticketId: ticketId
-
     };
-
 }
 
 async function uploadTicketPDF(pdf, ticketId) {
 
     const cloudName = "i6su4pd1";
-    const uploadPreset = "beautyofbeaches_ticket";
 
-    const pdfBlob = pdf.output("blob");
+    const uploadPreset =
+        "beautyofbeaches_ticket";
 
-    const formData = new FormData();
+    const pdfBlob =
+        pdf.output("blob");
+
+    const formData =
+        new FormData();
 
     formData.append(
         "file",
@@ -563,103 +590,146 @@ async function uploadTicketPDF(pdf, ticketId) {
         uploadPreset
     );
 
-    const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        {
-            method: "POST",
-            body: formData
-        }
-    );
+    const response =
+        await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
 
     if (!response.ok) {
-        throw new Error("PDF upload failed.");
+        throw new Error(
+            "PDF upload failed."
+        );
     }
 
-    const data = await response.json();
+    const data =
+        await response.json();
 
     return data.secure_url;
 }
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(
+    ScrollTrigger
+);
 
-const checkoutMM = gsap.matchMedia();
+const checkoutMM =
+    gsap.matchMedia();
 
-const checkoutIntro = gsap.timeline({
-    defaults: {
-        ease: "power3.out"
-    }
-});
+const checkoutIntro =
+    gsap.timeline({
+        defaults: {
+            ease: "power3.out"
+        }
+    });
 
 checkoutIntro
-    .from(".checkout_head span", {
-        y: 20,
-        opacity: 0,
-        duration: 0.7
-    })
-
-    .from(".checkout_head h1", {
-        y: 70,
-        opacity: 0,
-        duration: 1,
-        clipPath: "inset(100% 0% 0% 0%)"
-    }, "-=0.3")
-
-    .from(".checkout_head p", {
-        y: 25,
-        opacity: 0,
-        duration: 0.7
-    }, "-=0.5")
-
-    .from(".checkout_form", {
-        y: 50,
-        opacity: 0,
-        duration: 0.9
-    }, "-=0.3");
-
-
-checkoutMM.add("(min-width: 768px)", () => {
-
-
-    gsap.utils.toArray(".form_section").forEach((section) => {
-
-        const number = section.querySelector(".section_title span");
-        const title = section.querySelector(".section_title h2");
-
-        const elements = section.querySelectorAll(
-            ".field, .location_box, .checkout_map, .travel_results"
-        );
-
-
-        const tl = gsap.timeline({
-
-            scrollTrigger: {
-                trigger: section,
-                start: "top 80%",
-                end: "top 40%",
-                scrub: 1
-
-                // markers: true
-            }
-
-        });
-
-
-        tl.from(number, {
-            x: -30,
-            opacity: 0
-        })
-
-        .from(title, {
-            y: 40,
+    .from(
+        ".checkout_head span",
+        {
+            y: 20,
             opacity: 0,
-            clipPath: "inset(100% 0% 0% 0%)"
-        }, "-=0.5")
+            duration: 0.7
+        }
+    )
 
-        .from(elements, {
-            y: 35,
+    .from(
+        ".checkout_head h1",
+        {
+            y: 70,
             opacity: 0,
-            stagger: 0.08
-        }, "-=0.3");
+            duration: 1,
+            clipPath:
+                "inset(100% 0% 0% 0%)"
+        },
+        "-=0.3"
+    )
 
-    });
-    });
+    .from(
+        ".checkout_head p",
+        {
+            y: 25,
+            opacity: 0,
+            duration: 0.7
+        },
+        "-=0.5"
+    )
+
+    .from(
+        ".checkout_form",
+        {
+            y: 50,
+            opacity: 0,
+            duration: 0.9
+        },
+        "-=0.3"
+    );
+
+checkoutMM.add(
+    "(min-width: 768px)",
+    () => {
+
+        gsap.utils
+            .toArray(".form_section")
+            .forEach((section) => {
+
+                const number =
+                    section.querySelector(
+                        ".section_title span"
+                    );
+
+                const title =
+                    section.querySelector(
+                        ".section_title h2"
+                    );
+
+                const elements =
+                    section.querySelectorAll(
+                        ".field, .location_box, .checkout_map, .travel_results"
+                    );
+
+                const tl =
+                    gsap.timeline({
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top 80%",
+                            end: "top 40%",
+                            scrub: 1
+                        }
+                    });
+
+                tl.from(
+                    number,
+                    {
+                        x: -30,
+                        opacity: 0
+                    }
+                )
+
+                .from(
+                    title,
+                    {
+                        y: 40,
+                        opacity: 0,
+                        clipPath:
+                            "inset(100% 0% 0% 0%)"
+                    },
+                    "-=0.5"
+                )
+
+                .from(
+                    elements,
+                    {
+                        y: 35,
+                        opacity: 0,
+                        stagger: 0.08
+                    },
+                    "-=0.3"
+                );
+
+            });
+
+    }
+);
