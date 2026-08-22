@@ -101,39 +101,4 @@ travelCards.forEach(card => {
 
     });
 
-    button.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        const transport = {
-            name: card.dataset.name,
-            pricePerHour: Number(card.dataset.price)
-        };
-
-        sessionStorage.setItem(
-            "travelData",
-            JSON.stringify(transport)
-        );
-
-        const checkoutURL =
-            new URL(
-                "./checkout.html",
-                window.location.href
-            );
-
-        checkoutURL.searchParams.set(
-            "transport",
-            transport.name
-        );
-
-        checkoutURL.searchParams.set(
-            "price",
-            transport.pricePerHour
-        );
-
-        window.location.href =
-            checkoutURL.href;
-
-    });
-
 });
