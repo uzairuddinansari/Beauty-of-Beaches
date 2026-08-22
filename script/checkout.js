@@ -9,6 +9,14 @@ const popupBeach = document.querySelector("#popupBeach");
 const popupTotal = document.querySelector("#popupTotal");
 const popupClose = document.querySelector("#popupClose");
 
+const params = new URLSearchParams(window.location.search);
+
+const selectedTransport = {
+    name: params.get("transport"),
+    pricePerHour: Number(params.get("price"))
+};
+
+console.log(selectedTransport);
 emailjs.init({
     publicKey: "BzGltKCOegYcIM4YV"
 });
