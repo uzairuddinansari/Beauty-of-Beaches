@@ -152,52 +152,24 @@ travelCards.forEach(card => {
     // CHECK OUT BUTTON
     // =====================================================
 
-    button.addEventListener("click", function (e) {
+button.onclick = function () {
 
-        e.preventDefault();
-        e.stopPropagation();
+    const transport = {
+        name: card.dataset.name,
+        pricePerHour: Number(card.dataset.price)
+    };
 
+    sessionStorage.setItem(
+        "travelData",
+        JSON.stringify(transport)
+    );
 
-        // =================================================
-        // GET SELECTED TRANSPORT
-        // =================================================
-
-        const transport = {
-
-            name: card.dataset.name,
-
-            pricePerHour:
-                Number(card.dataset.price)
-
-        };
-
-
-        // =================================================
-        // SAVE TRANSPORT
-        // =================================================
-
-        sessionStorage.setItem(
-            "travelData",
-            JSON.stringify(transport)
+    window.location.href =
+        window.location.origin +
+        window.location.pathname.replace(
+            /[^/]+$/,
+            "checkout.html"
         );
-
-
-        // =================================================
-        // GITHUB PAGES CHECKOUT PATH
-        // =================================================
-
-        const checkoutPath = new URL(
-            "./checkout.html",
-            window.location.href
-        ).href;
-
-
-        // =================================================
-        // OPEN CHECKOUT
-        // =================================================
-
-        window.location.href = checkoutPath;
-
-    });
+};
 
 });
