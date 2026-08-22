@@ -1,0 +1,112 @@
+.our_story {
+    width: 100%;
+    height: 80vh;
+    overflow: visible;
+    margin-top: 200px;
+}
+
+.heading_sec {
+    width: 100vw;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3vw;
+}
+
+.heading_sec h3 {
+   margin: 0;
+   font-family: "1st" , peridot-pe-variable ;
+   font-size: 2vw;
+   color: #7C8fa2;
+   font-weight: lighter;
+}
+
+.story_main {
+    width: 100%;
+    height: calc(100% - 100px);
+    /* background-color: blueviolet; */
+    position: relative;
+}
+
+/* LEFT IMAGE */
+
+.story_sec:nth-child(1) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40vw;
+    height: 90%;
+    transform: translateY(100%);
+    z-index: 4;
+}
+.story_sec:nth-child(1)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(178, 177, 175, 0.722);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.story_sec:nth-child(1) img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+}
+
+/* CENTER TEXT */
+
+.story_sec:nth-child(2) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 40vw;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5;
+}
+
+.story_sec:nth-child(2) p {
+    margin: 0;
+    font-family: "1st" , peridot-pe-variable ;
+    font-size: clamp(25px, 0.4vw, 40px);
+    line-height: 1.40;
+    font-weight: 500;
+    color: #161616;
+    text-shadow: #5a5757;
+}
+
+/* RIGHT IMAGE */
+
+.story_sec:nth-child(3) {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 25vw;
+    height: 100%;
+    transform: translateY(0);
+}
+
+.story_sec:nth-child(3) img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    padding: 20px 0px ;
+}
+
+#style{
+    width: 40%;
+    height: 100%;
+    text-align: right; 
+     font-family: "stylish", serif;
+     font-weight: lighter;
+     font-size: 1.2vw;
+}
+.story_sec:nth-child(2) #story{
+     font-size: 5vw;
+    font-family: "1st" , Blacker Sens Light;
+}

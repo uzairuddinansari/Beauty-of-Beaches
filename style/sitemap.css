@@ -1,0 +1,642 @@
+/* =========================================
+   BEAUTY OF BEACHES — SITE MAP
+========================================= */
+
+.site-map {
+    width: 100%;
+    min-height: 100vh;
+    color: #101010;
+    padding: 130px 4vw 50px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.site-map-head {
+    position: relative;
+    z-index: 5;
+}
+
+
+.site-map-meta {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(0,0,0,.18);
+
+    font-family: "1st", peridot-pe-variable;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+
+.site-map-title-wrap {
+    margin-top: 55px;
+    overflow: hidden;
+}
+
+
+.site-map-title {
+    margin: 0;
+    font-family: "Boska-Medium";
+    font-weight: 500;
+    font-size: clamp(75px, 12vw, 180px);
+    line-height: .78;
+    letter-spacing: -7px;
+    text-transform: uppercase;
+}
+
+
+.site-map-title span {
+    display: block;
+    padding-left: 15vw;
+    color: transparent;
+    -webkit-text-stroke: 1px #101010;
+}
+
+
+.site-map-intro {
+    width: 260px;
+    margin-left: auto;
+    margin-top: -15px;
+
+    font-family: "1st", peridot-pe-variable;
+    font-size: 13px;
+    line-height: 1.7;
+
+    color: #555;
+}
+
+
+
+.map-stage {
+    width: 100%;
+    height: 650px;
+    margin-top: 80px;
+    position: relative;
+
+    border-top: 1px solid rgba(0,0,0,.12);
+    border-bottom: 1px solid rgba(0,0,0,.12);
+
+    overflow: hidden;
+}
+
+
+/* subtle grid */
+
+.map-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(0,0,0,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 80px 80px;
+
+    pointer-events: none;
+}
+
+.world-map {
+    position: absolute;
+
+    width: 92%;
+    height: 100%;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    overflow: visible;
+}
+
+
+
+.coast {
+    fill: rgba(0,0,0,.025);
+    stroke: rgba(0,0,0,.22);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+
+.coast-1,
+.coast-2,
+.coast-3 {
+    transition:
+        fill .5s ease,
+        stroke .5s ease;
+}
+
+
+
+.map-route {
+    fill: none;
+
+    stroke: #111;
+    stroke-width: 1.2;
+
+    stroke-dasharray: 7 9;
+    stroke-dashoffset: 0;
+
+    opacity: .55;
+
+    vector-effect: non-scaling-stroke;
+}
+
+
+.map-route-light {
+    stroke: #777;
+    opacity: .22;
+    stroke-dasharray: 3 12;
+}
+
+
+.map-node {
+    cursor: pointer;
+}
+
+
+.node-ring {
+    fill: #f5f5f3;
+    stroke: #111;
+    stroke-width: 1;
+}
+
+
+.node-dot {
+    fill: #111;
+}
+
+
+.map-node::after {
+    content: "";
+}
+
+
+.map-node:hover .node-ring {
+    fill: #111;
+}
+
+
+.map-node:hover .node-dot {
+    fill: #fff;
+}
+
+
+.beach-point {
+    fill: #111;
+    opacity: .35;
+}
+
+
+
+
+.zone-card {
+    position: absolute;
+
+    width: 180px;
+
+    padding: 15px;
+
+    border: 1px solid rgba(0,0,0,.25);
+
+    background: rgba(245,245,243,.82);
+
+    backdrop-filter: blur(8px);
+
+    display: grid;
+    grid-template-columns: 25px 1fr;
+    column-gap: 12px;
+
+    transition:
+        transform .5s cubic-bezier(.16,1,.3,1),
+        background .4s ease,
+        color .4s ease;
+
+    z-index: 5;
+}
+
+
+.zone-card:hover {
+    background: #111;
+    color: white;
+    transform: translateY(-8px);
+}
+
+
+.zone-index {
+    font-family: "1st", peridot-pe-variable;
+    font-size: 9px;
+    opacity: .5;
+}
+
+
+.zone-card small {
+    font-family: "1st", peridot-pe-variable;
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+
+.zone-card h3 {
+    margin-top: 6px;
+
+    font-family: "Boska-Medium", serif;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+
+.zone-card a {
+    grid-column: 2;
+
+    margin-top: 25px;
+
+    color: inherit;
+    text-decoration: none;
+
+    font-family: "1st", peridot-pe-variable;
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+
+.zone-card a span {
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+
+/* positions */
+
+.zone-north {
+    left: 6%;
+    top: 14%;
+}
+
+
+.zone-east {
+    right: 5%;
+    top: 24%;
+}
+
+
+.zone-south {
+    right: 28%;
+    bottom: 8%;
+}
+
+
+.zone-west {
+    left: 27%;
+    top: 7%;
+}
+
+
+
+.map-center {
+    position: absolute;
+
+    left: 50%;
+    top: 53%;
+
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+
+.center-line {
+    width: 1px;
+    height: 65px;
+
+    display: block;
+
+    margin: 0 auto 15px;
+
+    background: #111;
+
+    transform-origin: top;
+}
+
+
+.center-text {
+    display: block;
+
+    font-family: "Boska-Medium", serif;
+
+    font-size: 19px;
+
+    line-height: .9;
+
+    letter-spacing: 2px;
+}
+
+
+.center-coordinates {
+    display: block;
+
+    margin-top: 15px;
+
+    font-family: "1st", peridot-pe-variable;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+
+    opacity: .5;
+}
+
+
+
+.map-coordinate {
+    position: absolute;
+
+    font-family: "1st", peridot-pe-variable;
+
+    font-size: 8px;
+
+    color: #888;
+
+    writing-mode: vertical-rl;
+
+    z-index: 4;
+}
+
+
+.map-coordinate-1 {
+    left: 18px;
+    top: 50%;
+}
+
+
+.map-coordinate-2 {
+    right: 18px;
+    top: 25%;
+}
+
+
+
+
+.map-mouse {
+    position: absolute;
+
+    right: 25px;
+    bottom: 20px;
+
+    display: flex;
+    gap: 10px;
+
+    font-family: "1st", peridot-pe-variable;
+
+    font-size: 8px;
+
+    z-index: 10;
+}
+
+
+.map-mouse b {
+    font-weight: 400;
+}
+
+
+.site-map-footer {
+    display: flex;
+    justify-content: space-between;
+
+    padding-top: 20px;
+
+    font-family: "1st", peridot-pe-variable;
+
+    font-size: 9px;
+
+    color: #666;
+}
+
+
+@media (max-width: 900px) {
+
+    .site-map {
+        padding: 100px 20px 35px;
+    }
+
+
+    .site-map-title {
+        font-size: clamp(65px, 14vw, 120px);
+        letter-spacing: -4px;
+    }
+
+
+    .site-map-title span {
+        padding-left: 10vw;
+    }
+
+
+    .site-map-intro {
+        margin-top: 35px;
+        margin-left: 0;
+    }
+
+
+    .map-stage {
+        height: 600px;
+        margin-top: 60px;
+    }
+
+
+    .world-map {
+        width: 115%;
+        left: 50%;
+    }
+
+
+    .zone-card {
+        width: 150px;
+    }
+
+
+    .zone-north {
+        left: 3%;
+        top: 13%;
+    }
+
+
+    .zone-east {
+        right: 3%;
+        top: 27%;
+    }
+
+
+    .zone-south {
+        right: 5%;
+        bottom: 8%;
+    }
+
+
+    .zone-west {
+        left: 5%;
+        top: 7%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .site-map {
+        padding-top: 80px;
+    }
+
+
+    .site-map-meta span:last-child {
+        display: none;
+    }
+
+
+    .site-map-title {
+        font-size: 18vw;
+        line-height: .82;
+    }
+
+
+    .site-map-title span {
+        padding-left: 5vw;
+    }
+
+
+    .site-map-intro {
+        font-size: 12px;
+        width: 230px;
+    }
+
+
+    .map-stage {
+        height: 650px;
+        margin-top: 50px;
+    }
+
+
+    .world-map {
+        width: 180%;
+        max-width: none;
+        left: 50%;
+    }
+
+
+    .zone-card {
+        width: 125px;
+        padding: 10px;
+
+        grid-template-columns: 18px 1fr;
+        column-gap: 7px;
+    }
+
+
+    .zone-card h3 {
+        font-size: 18px;
+    }
+
+
+    .zone-card a {
+        margin-top: 18px;
+    }
+
+
+    .zone-north {
+        left: 3%;
+        top: 10%;
+    }
+
+
+    .zone-east {
+        right: 3%;
+        top: 28%;
+    }
+
+
+    .zone-south {
+        right: 3%;
+        bottom: 7%;
+    }
+
+
+    .zone-west {
+        left: 3%;
+        top: 49%;
+    }
+
+
+    .map-center {
+        top: 58%;
+    }
+
+
+    .center-text {
+        font-size: 15px;
+    }
+
+
+    .map-coordinate {
+        display: none;
+    }
+
+
+    .map-mouse {
+        display: none;
+    }
+
+
+    .site-map-footer {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+}
+
+
+@media (max-width: 400px) {
+
+    .map-stage {
+        height: 620px;
+    }
+
+
+    .world-map {
+        width: 210%;
+    }
+
+
+    .zone-card {
+        width: 115px;
+    }
+
+
+    .zone-card h3 {
+        font-size: 16px;
+    }
+
+
+    .zone-south {
+        bottom: 5%;
+    }
+
+}
