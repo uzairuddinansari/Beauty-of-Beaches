@@ -1,19 +1,3 @@
-const checkoutParams = new URLSearchParams(window.location.search);
-
-const selectedTransportName =
-    checkoutParams.get("transport");
-
-const selectedTransportPrice =
-    Number(checkoutParams.get("price"));
-
-if (
-    !selectedTransportName ||
-    !Number.isFinite(selectedTransportPrice)
-) {
-    alert("Please select a transport first.");
-    window.location.href = "./travels.html";
-}
-
 const bookingForm = document.querySelector("#bookingForm");
 const nameInput = document.querySelector("#name");
 const phoneInput = document.querySelector("#phone");
@@ -25,48 +9,128 @@ const popupBeach = document.querySelector("#popupBeach");
 const popupTotal = document.querySelector("#popupTotal");
 const popupClose = document.querySelector("#popupClose");
 
+
+// =========================================================
+// GET TRANSPORT FROM TRAVELS HTML LINK
+// =========================================================
+
+const params = new URLSearchParams(window.location.search);
+
+const selectedTransport = {
+    name: params.get("transport"),
+    pricePerHour: Number(params.get("price"))
+};
+
+
+if (
+    !selectedTransport.name ||
+    !selectedTransport.pricePerHour
+) {
+
+    alert("Please select your transport first.");
+
+    window.location.href = "../html/travels.html";
+
+}
+
+
+// =========================================================
+// SHOW SELECTED TRANSPORT
+// =========================================================
+
+if (typeof transportResult !== "undefined") {
+
+    transportResult.textContent =
+        selectedTransport.name;
+
+}
+
+
+if (typeof priceResult !== "undefined") {
+
+    priceResult.textContent =
+        `$${selectedTransport.pricePerHour}/HR`;
+
+}
+
+
+// =========================================================
+// EMAIL JS
+// =========================================================
+
 emailjs.init({
     publicKey: "BzGltKCOegYcIM4YV"
 });
+
+
+// =========================================================
+// BOOKING FORM
+// =========================================================
 
 bookingForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const name = nameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    const email = emailInput.value.trim();
+
+    const name =
+        nameInput.value.trim();
+
+    const phone =
+        phoneInput.value.trim();
+
+    const email =
+        emailInput.value.trim();
 
 
     if (!name || !phone || !email) {
+
         alert("Please fill all fields.");
+
         return;
+
     }
+
 
     if (!emailInput.checkValidity()) {
+
         alert("Please enter a valid email.");
+
         return;
+
     }
 
-    const travelData = JSON.parse(
-        sessionStorage.getItem("travelData")
-    );
+
+    const travelData =
+        JSON.parse(
+            sessionStorage.getItem("travelData")
+        );
+
 
     if (!travelData) {
+
         alert("Please select your beach first.");
+
         return;
+
     }
+
+
     const finalBooking = {
 
         customer: {
+
             name: name,
+
             phone: phone,
+
             email: email
+
         },
 
         travel: travelData
 
     };
+
 
     sessionStorage.setItem(
         "finalBooking",
@@ -81,19 +145,25 @@ bookingForm.addEventListener("submit", async (e) => {
         travelData.beach;
 
     popupTotal.textContent =
-        `$${Number(travelData.total).toFixed(2)}`;
+        `$${Number(
+            travelData.total
+        ).toFixed(2)}`;
+
 
     popup.classList.add("active");
 
+
     bookingForm.reset();
+
 
     try {
 
         const ticket =
-            generateTicketPDF(finalBooking);
+            generateTicketPDF(
+                finalBooking
+            );
 
 
-        // Upload PDF to Cloudinary
         const ticketUrl =
             await uploadTicketPDF(
                 ticket.pdf,
@@ -101,10 +171,12 @@ bookingForm.addEventListener("submit", async (e) => {
             );
 
 
-        // Send confirmation email
         await emailjs.send(
+
             "service_9lcovpr",
+
             "template_psapi7g",
+
             {
 
                 customer_name:
@@ -121,20 +193,40 @@ bookingForm.addEventListener("submit", async (e) => {
 
                 beach:
                     travelData.beach,
-                zone:travelData.zone,
-                distance: Number(travelData.distance ).toFixed(1),
-                hours: Number( travelData.hours ).toFixed(2),
-                total:`$${Number(travelData.total).toFixed(2)}`,
-                booking_id:ticket.ticketId,
-                // Cloudinary PDF link
-                ticket_url:ticketUrl
+
+                zone:
+                    travelData.zone,
+
+                distance:
+                    Number(
+                        travelData.distance
+                    ).toFixed(1),
+
+                hours:
+                    Number(
+                        travelData.hours
+                    ).toFixed(2),
+
+                total:
+                    `$${Number(
+                        travelData.total
+                    ).toFixed(2)}`,
+
+                booking_id:
+                    ticket.ticketId,
+
+                ticket_url:
+                    ticketUrl
+
             }
+
         );
 
 
         console.log(
             "Confirmation email sent."
         );
+
 
     } catch (error) {
 
@@ -148,121 +240,227 @@ bookingForm.addEventListener("submit", async (e) => {
 });
 
 
-popupClose.addEventListener("click", () => {
+// =========================================================
+// POPUP CLOSE
+// =========================================================
 
-    popup.classList.remove("active");
+popupClose.addEventListener(
+    "click",
+    () => {
 
-    bookingForm.reset();
+        popup.classList.remove(
+            "active"
+        );
 
-    zoneSelect.value = "";
+        bookingForm.reset();
 
-    beachSelect.innerHTML = `
-        <option value="">
-            Choose Beach
-        </option>
-    `;
 
-    beachSelect.disabled = true;
+        zoneSelect.value = "";
 
-    if (userMarker) {
-        map.removeLayer(userMarker);
-        userMarker = null;
+
+        beachSelect.innerHTML = `
+            <option value="">
+                Choose Beach
+            </option>
+        `;
+
+
+        beachSelect.disabled = true;
+
+
+        if (userMarker) {
+
+            map.removeLayer(
+                userMarker
+            );
+
+            userMarker = null;
+
+        }
+
+
+        if (beachMarker) {
+
+            map.removeLayer(
+                beachMarker
+            );
+
+            beachMarker = null;
+
+        }
+
+
+        if (routeLine) {
+
+            map.removeLayer(
+                routeLine
+            );
+
+            routeLine = null;
+
+        }
+
+
+        userLocation = null;
+
+
+        distanceKm = 0;
+
+
+        map.setView(
+            [20, 0],
+            2
+        );
+
+
+        distanceResult.textContent =
+            "—";
+
+        timeResult.textContent =
+            "—";
+
+
+        transportResult.textContent =
+            "—";
+
+
+        priceResult.textContent =
+            "—";
+
+
+        summaryTransport.textContent =
+            "—";
+
+
+        summaryBeach.textContent =
+            "Choose Beach";
+
+
+        summaryZoneText.textContent =
+            "Select your destination";
+
+
+        summaryZone.textContent =
+            "DESTINATION";
+
+
+        summaryDistance.textContent =
+            "0 KM";
+
+
+        summaryTime.textContent =
+            "0 Hours";
+
+
+        summaryTotal.textContent =
+            "$0.00";
+
+
+        sessionStorage.removeItem(
+            "travelData"
+        );
+
+
+        sessionStorage.removeItem(
+            "finalBooking"
+        );
+
+
+        sessionStorage.removeItem(
+            "selectedTransport"
+        );
+
     }
-    if (beachMarker) {
+);
 
-        map.removeLayer(beachMarker);
-        beachMarker = null;
-    }
-    if (routeLine) {
-        map.removeLayer(routeLine);
-        routeLine = null;
-    }
-    userLocation = null;
 
-    distanceKm = 0;
-
-    map.setView(
-        [20, 0],
-        2
-    );
-
-    distanceResult.textContent = "—";
-
-    timeResult.textContent = "—";
-
-    transportResult.textContent = "—";
-
-    priceResult.textContent = "—";
-
-    summaryTransport.textContent = "—";
-    summaryBeach.textContent =
-        "Choose Beach";
-    summaryZoneText.textContent =
-        "Select your destination";
-    summaryZone.textContent =
-        "DESTINATION";
-    summaryDistance.textContent =
-        "0 KM";
-    summaryTime.textContent =
-        "0 Hours";
-    summaryTotal.textContent =
-        "$0.00";
-    sessionStorage.removeItem(
-        "travelData"
-    );
-    sessionStorage.removeItem(
-        "finalBooking"
-    );
-});
+// =========================================================
+// GENERATE TICKET PDF
+// =========================================================
 
 function generateTicketPDF(booking) {
+
     const { jsPDF } =
         window.jspdf;
-    const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-        compress: true
-    });
+
+
+    const pdf =
+        new jsPDF({
+
+            orientation: "portrait",
+
+            unit: "mm",
+
+            format: "a4",
+
+            compress: true
+
+        });
+
 
     const ticketId =
         "BOB-" +
+
         Math.random()
             .toString(36)
             .substring(2, 8)
             .toUpperCase();
+
+
     const qrContainer =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
+
     new QRCode(
+
         qrContainer,
+
         {
+
             text: ticketId,
+
             width: 120,
+
             height: 120,
+
             correctLevel:
                 QRCode.CorrectLevel.M
+
         }
+
     );
+
+
     const qrCanvas =
         qrContainer.querySelector(
             "canvas"
         );
+
+
     if (!qrCanvas) {
+
         throw new Error(
             "QR Code could not be generated."
         );
 
     }
+
+
     const qrImage =
         qrCanvas.toDataURL(
             "image/jpeg",
             0.5
         );
+
+
     pdf.setFillColor(
         17,
         17,
         17
     );
+
 
     pdf.rect(
         0,
@@ -279,7 +477,9 @@ function generateTicketPDF(booking) {
         255
     );
 
+
     pdf.setFontSize(22);
+
 
     pdf.text(
         "BEAUTYOFBEACHES",
@@ -290,11 +490,13 @@ function generateTicketPDF(booking) {
 
     pdf.setFontSize(9);
 
+
     pdf.text(
         "TRAVEL TICKET",
         20,
         28
     );
+
 
     pdf.setTextColor(
         17,
@@ -302,7 +504,9 @@ function generateTicketPDF(booking) {
         17
     );
 
+
     pdf.setFontSize(20);
+
 
     pdf.text(
         "BOOKING CONFIRMED",
@@ -313,11 +517,13 @@ function generateTicketPDF(booking) {
 
     pdf.setFontSize(10);
 
+
     pdf.setTextColor(
         100,
         100,
         100
     );
+
 
     pdf.text(
         "Your travel booking has been successfully confirmed.",
@@ -325,13 +531,16 @@ function generateTicketPDF(booking) {
         66
     );
 
+
     pdf.setTextColor(
         17,
         17,
         17
     );
 
+
     pdf.setFontSize(10);
+
 
     pdf.text(
         "BOOKING ID",
@@ -342,6 +551,7 @@ function generateTicketPDF(booking) {
 
     pdf.setFontSize(15);
 
+
     pdf.text(
         ticketId,
         20,
@@ -350,6 +560,7 @@ function generateTicketPDF(booking) {
 
 
     pdf.setFontSize(12);
+
 
     pdf.text(
         "PASSENGER DETAILS",
@@ -363,6 +574,7 @@ function generateTicketPDF(booking) {
         220,
         220
     );
+
 
     pdf.line(
         20,
@@ -395,12 +607,16 @@ function generateTicketPDF(booking) {
         141
     );
 
+
     pdf.setFontSize(12);
+
+
     pdf.text(
         "TRAVEL DETAILS",
         20,
         160
     );
+
 
     pdf.line(
         20,
@@ -409,7 +625,9 @@ function generateTicketPDF(booking) {
         164
     );
 
+
     pdf.setFontSize(10);
+
 
     pdf.text(
         `Beach: ${booking.travel.beach}`,
@@ -448,24 +666,33 @@ function generateTicketPDF(booking) {
         20,
         207
     );
+
+
     pdf.setFillColor(
         17,
         17,
         17
     );
+
+
     pdf.rect(
         20,
         220,
         170,
         20,
         "F"
-    )
+    );
+
+
     pdf.setTextColor(
         255,
         255,
         255
     );
+
+
     pdf.setFontSize(10);
+
 
     pdf.text(
         "TOTAL FARE",
@@ -473,7 +700,9 @@ function generateTicketPDF(booking) {
         232
     );
 
+
     pdf.setFontSize(16);
+
 
     pdf.text(
         `$${Number(
@@ -482,16 +711,26 @@ function generateTicketPDF(booking) {
         150,
         232
     );
+
+
     pdf.addImage(
 
         qrImage,
+
         "JPEG",
+
         135,
+
         55,
+
         45,
+
         45,
+
         undefined,
+
         "FAST"
+
     );
 
 
@@ -504,11 +743,13 @@ function generateTicketPDF(booking) {
 
     pdf.setFontSize(8);
 
+
     pdf.text(
         "Scan Ticket",
         148,
         103
     );
+
 
     pdf.setTextColor(
         120,
@@ -518,6 +759,8 @@ function generateTicketPDF(booking) {
 
 
     pdf.setFontSize(9);
+
+
     pdf.text(
         "Thank you for choosing BeautyOfBeaches.",
         20,
@@ -541,6 +784,7 @@ function generateTicketPDF(booking) {
         285
     );
 
+
     return {
 
         pdf: pdf,
@@ -551,14 +795,31 @@ function generateTicketPDF(booking) {
 
 }
 
-async function uploadTicketPDF(pdf, ticketId) {
 
-    const cloudName = "i6su4pd1";
-    const uploadPreset = "beautyofbeaches_ticket";
+// =========================================================
+// CLOUDINARY PDF UPLOAD
+// =========================================================
 
-    const pdfBlob = pdf.output("blob");
+async function uploadTicketPDF(
+    pdf,
+    ticketId
+) {
 
-    const formData = new FormData();
+    const cloudName =
+        "i6su4pd1";
+
+
+    const uploadPreset =
+        "beautyofbeaches_ticket";
+
+
+    const pdfBlob =
+        pdf.output("blob");
+
+
+    const formData =
+        new FormData();
+
 
     formData.append(
         "file",
@@ -566,108 +827,225 @@ async function uploadTicketPDF(pdf, ticketId) {
         `${ticketId}.pdf`
     );
 
+
     formData.append(
         "upload_preset",
         uploadPreset
     );
 
-    const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        {
-            method: "POST",
-            body: formData
-        }
-    );
 
-    if (!response.ok) {
-        throw new Error("PDF upload failed.");
-    }
+    const response =
+        await fetch(
 
-    const data = await response.json();
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
 
-    return data.secure_url;
-}
+            {
 
-gsap.registerPlugin(ScrollTrigger);
+                method: "POST",
 
-const checkoutMM = gsap.matchMedia();
+                body: formData
 
-const checkoutIntro = gsap.timeline({
-    defaults: {
-        ease: "power3.out"
-    }
-});
+            }
 
-checkoutIntro
-    .from(".checkout_head span", {
-        y: 20,
-        opacity: 0,
-        duration: 0.7
-    })
-
-    .from(".checkout_head h1", {
-        y: 70,
-        opacity: 0,
-        duration: 1,
-        clipPath: "inset(100% 0% 0% 0%)"
-    }, "-=0.3")
-
-    .from(".checkout_head p", {
-        y: 25,
-        opacity: 0,
-        duration: 0.7
-    }, "-=0.5")
-
-    .from(".checkout_form", {
-        y: 50,
-        opacity: 0,
-        duration: 0.9
-    }, "-=0.3");
-
-
-checkoutMM.add("(min-width: 768px)", () => {
-
-
-    gsap.utils.toArray(".form_section").forEach((section) => {
-
-        const number = section.querySelector(".section_title span");
-        const title = section.querySelector(".section_title h2");
-
-        const elements = section.querySelectorAll(
-            ".field, .location_box, .checkout_map, .travel_results"
         );
 
 
-        const tl = gsap.timeline({
+    if (!response.ok) {
 
-            scrollTrigger: {
-                trigger: section,
-                start: "top 80%",
-                end: "top 40%",
-                scrub: 1
+        throw new Error(
+            "PDF upload failed."
+        );
 
-                // markers: true
-            }
-
-        });
+    }
 
 
-        tl.from(number, {
-            x: -30,
-            opacity: 0
-        })
+    const data =
+        await response.json();
 
-        .from(title, {
-            y: 40,
-            opacity: 0,
-            clipPath: "inset(100% 0% 0% 0%)"
-        }, "-=0.5")
 
-        .from(elements, {
-            y: 35,
-            opacity: 0,
-            stagger: 0.08
-        }, "-=0.3");
+    return data.secure_url;
+
+}
+
+
+// =========================================================
+// GSAP
+// =========================================================
+
+gsap.registerPlugin(
+    ScrollTrigger
+);
+
+
+const checkoutMM =
+    gsap.matchMedia();
+
+
+const checkoutIntro =
+    gsap.timeline({
+
+        defaults: {
+
+            ease: "power3.out"
+
+        }
 
     });
-    });
+
+
+checkoutIntro
+
+    .from(
+        ".checkout_head span",
+        {
+
+            y: 20,
+
+            opacity: 0,
+
+            duration: 0.7
+
+        }
+    )
+
+    .from(
+        ".checkout_head h1",
+        {
+
+            y: 70,
+
+            opacity: 0,
+
+            duration: 1,
+
+            clipPath:
+                "inset(100% 0% 0% 0%)"
+
+        },
+        "-=0.3"
+    )
+
+    .from(
+        ".checkout_head p",
+        {
+
+            y: 25,
+
+            opacity: 0,
+
+            duration: 0.7
+
+        },
+        "-=0.5"
+    )
+
+    .from(
+        ".checkout_form",
+        {
+
+            y: 50,
+
+            opacity: 0,
+
+            duration: 0.9
+
+        },
+        "-=0.3"
+    );
+
+
+checkoutMM.add(
+    "(min-width: 768px)",
+    () => {
+
+        gsap.utils
+            .toArray(".form_section")
+            .forEach(
+                (section) => {
+
+                    const number =
+                        section.querySelector(
+                            ".section_title span"
+                        );
+
+
+                    const title =
+                        section.querySelector(
+                            ".section_title h2"
+                        );
+
+
+                    const elements =
+                        section.querySelectorAll(
+                            ".field, .location_box, .checkout_map, .travel_results"
+                        );
+
+
+                    const tl =
+                        gsap.timeline({
+
+                            scrollTrigger: {
+
+                                trigger:
+                                    section,
+
+                                start:
+                                    "top 80%",
+
+                                end:
+                                    "top 40%",
+
+                                scrub: 1
+
+                            }
+
+                        });
+
+
+                    tl.from(
+                        number,
+                        {
+
+                            x: -30,
+
+                            opacity: 0
+
+                        }
+                    )
+
+
+                    .from(
+                        title,
+                        {
+
+                            y: 40,
+
+                            opacity: 0,
+
+                            clipPath:
+                                "inset(100% 0% 0% 0%)"
+
+                        },
+                        "-=0.5"
+                    )
+
+
+                    .from(
+                        elements,
+                        {
+
+                            y: 35,
+
+                            opacity: 0,
+
+                            stagger: 0.08
+
+                        },
+                        "-=0.3"
+                    );
+
+                }
+            );
+
+    }
+);
